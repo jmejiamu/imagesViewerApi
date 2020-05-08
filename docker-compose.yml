@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+    #Back end API
+    place-viewer-api:
+        container_name: backend
+        build: ./
+        command: npm start 
+        working_dir: /usr/src/placeviewer-server
+        environment: 
+            POSTGRES_URI: postgres://hacker:secret@postgres:5432/img
+        links: 
+            - postgres
+        ports: 
+            - "3001:3001"
+        volumes: 
+            - ./:/usr/src/placeviewer-server   
+        
+# Postgrest
+    postgres:
+        environment: 
+            POSTGRES_USER: hacker
+            POSTGRES_PASSWORD: secret
+            POSTGRES_DB: img
+            POSTGRES_HOST: postgres
+        container_name: postgres
+        build: ./postgres
+        ports: 
+            - "5432:5432"
+        
