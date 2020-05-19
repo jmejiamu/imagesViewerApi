@@ -42,7 +42,8 @@ const getLastComments = async (req, res, db) => {
       .select("users_comments")
       .from("comments")
       .orderBy("users_comments", "desc")
-      .limit(3);
+      .limit(2);
+
     res.status(200).send(lastComments);
   } catch (error) {
     console.error(error.message);
@@ -58,7 +59,24 @@ const getAllImages = async (req, res, db) => {
   }
 };
 
-// Get test
+const getRepley = async (req, res, db) => {
+  try {
+    const user_repleys = await db.select("*").from("repley");
+    res.status(200).send(user_repleys);
+  } catch (err) {
+    throw err;
+  }
+};
+const getRepleyByUid = async (req, res, db) =>{
+  const {user_id } = req.params;
+  try {
+    const repley = await db.select("*").from("repley").where({user_id})
+    res.status(200).send(repley);
+  } catch (e) {
+    throw e;
+  }
+}
+ // Get test
 // app.get('/comentario',(req, res)=>{
 //     db.select('*').from('comment_test').orderBy('user_id','asc')
 //     .then(data => {
@@ -72,4 +90,6 @@ module.exports = {
   getAcomment,
   getAllImages,
   getLastComments,
+  getRepley,
+  getRepleyByUid,
 };

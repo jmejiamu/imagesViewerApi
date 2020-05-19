@@ -5,6 +5,9 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 //Import Routes
+const register = require("./routes/register/register");
+const _signin = require("./routes/signin/signin");
+
 const p = require("./routes/posts");
 const g = require("./routes/gets");
 const updateData = require("./routes/update");
@@ -14,8 +17,22 @@ const db = knex({
   client: "pg",
   connection: process.env.POSTGRES_URI,
 });
+// const db = knex({
+//   client: 'pg',
+//   version: '10',
+//   connection: {
+//     host : 'localhost',
+//     port : 5432,
+//     user : 'red',
+//     password : '',
+//     database : 'img'
+//   }
+// });
+
+
 
 const app = express();
+// app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 app.use(morgan("combined"));
 app.use(cors());
@@ -66,12 +83,33 @@ app.delete("/delete_comments/:user_id", (req, res) => {
 app.get("/Allimages", (req, res) => {
   g.getAllImages(req, res, db);
 });
+// -- register user
+app.post("/new/register", (req, res) => {
+  register.registerUser(req, res, db);
+});
+
+// -- signin
+app.post("/signin", (req, res) => {
+  _signin.userSignin(req, res, db);
+});
 
 // Displaying the last three comments.
 app.get("/last/user/comments", (req, res) => {
   g.getLastComments(req, res, db);
 });
 
+// User repley
+app.post("/user/repley", (req, res) => {
+  p.postRepley(req, res, db);
+});
+
+app.get("/repley", (req, res) => {
+  g.getRepley(req, res, db);
+});
+
+app.get("/repley/:user_id", (req, res) => {
+  g.getRepleyByUid(req, res, db);
+});
 app.get("/", (req, res) => {
   res.send("This is the home screen!!");
 });
