@@ -39,7 +39,7 @@ const getAcomment = async (req, res, db) => {
 const getLastComments = async (req, res, db) => {
   try {
     const lastComments = await db
-      .select("users_comments")
+      .select("image_id","users_comments")
       .from("comments")
       .orderBy("users_comments", "desc")
       .limit(3);
