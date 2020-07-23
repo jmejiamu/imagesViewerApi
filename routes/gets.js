@@ -39,7 +39,7 @@ const getAcomment = async (req, res, db) => {
 const getLastComments = async (req, res, db) => {
   try {
     const lastComments = await db
-      .select("image_id","users_comments")
+      .select("image_id", "users_comments")
       .from("comments")
       .orderBy("users_comments", "desc")
       .limit(2);
@@ -67,16 +67,16 @@ const getRepley = async (req, res, db) => {
     throw err;
   }
 };
-const getRepleyByUid = async (req, res, db) =>{
-  const {user_id } = req.params;
+const getRepleyByUid = async (req, res, db) => {
+  const { user_id } = req.params;
   try {
-    const repley = await db.select("*").from("repley").where({user_id})
+    const repley = await db.select("*").from("repley").where({ user_id })
     res.status(200).send(repley);
   } catch (e) {
     throw e;
   }
 }
- // Get test
+// Get test
 // app.get('/comentario',(req, res)=>{
 //     db.select('*').from('comment_test').orderBy('user_id','asc')
 //     .then(data => {

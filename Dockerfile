@@ -1,6 +1,7 @@
 FROM node:12.15.0
 
 #Creating a dir on the container 
+RUN mkdir -p /usr/src/placeviewer-server
 WORKDIR /usr/src/placeviewer-server
 
 #Copying all the files in the current dir to the container

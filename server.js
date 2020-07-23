@@ -130,7 +130,9 @@ app.get("/", (req, res) => {
 //     })
 // })
 // Plase this ip when dev locally'192.168.1.69'
+
+
 app.listen(3001, () => {
   console.log("http://172.17.0.1:3001/");
-  console.log("--> App is running at port 3001");
+  console.log("> App is running at port 3001");
 });
